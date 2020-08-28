@@ -7,11 +7,11 @@ import java.util.HashMap;
  *
  * @author mercm
  */
-public class Maps{
+class Maps{
 
-    public Maps(){}
+    Maps(){}
 
-    public HashMap<String, String> nounMap() throws IOException{
+    HashMap<String, String> nounMap() throws IOException{
         BufferedReader nouns = new BufferedReader(new FileReader("textDocuments/noun.txt"));
         HashMap<String, String> nounsMap = new HashMap<>();
 
@@ -20,7 +20,7 @@ public class Maps{
         return nounsMap;
     }
 
-    public HashMap<String, String> verbMap() throws IOException{
+    HashMap<String, String> verbMap() throws IOException{
         BufferedReader verbs = new BufferedReader(new FileReader("textDocuments/verb.txt"));
         HashMap<String, String> verbsMap = new HashMap<>();
 
@@ -29,7 +29,7 @@ public class Maps{
         return verbsMap;
     }
 
-    public HashMap<String, String> adjMap() throws IOException{
+    HashMap<String, String> adjMap() throws IOException{
         BufferedReader adjectives = new BufferedReader(new FileReader("textDocuments/adj.txt"));
         HashMap<String, String> adjMap = new HashMap<>();
 
@@ -38,7 +38,7 @@ public class Maps{
         return adjMap;
     }
 
-    public HashMap<String, String> advMap() throws IOException{
+    HashMap<String, String> advMap() throws IOException{
         BufferedReader adverbs = new BufferedReader(new FileReader("textDocuments/adv.txt"));
         HashMap<String, String> advMap = new HashMap<>();
 
@@ -47,7 +47,7 @@ public class Maps{
         return advMap;
     }
 
-    public HashMap<String, String> pronounMap() throws IOException{
+    HashMap<String, String> pronounMap() throws IOException{
         BufferedReader pronouns = new BufferedReader(new FileReader("textDocuments/pronoun.txt"));
         HashMap<String, String> pronounMap = new HashMap<>();
 
@@ -56,7 +56,7 @@ public class Maps{
         return pronounMap;
     }
 
-    public HashMap<String, String> articleMap() throws IOException{
+    HashMap<String, String> articleMap() throws IOException{
         BufferedReader articles = new BufferedReader(new FileReader("textDocuments/article.txt"));
         HashMap<String, String> articleMap = new HashMap<>();
 
@@ -65,7 +65,7 @@ public class Maps{
         return articleMap;
     }
 
-    public HashMap<String, String> prepMap() throws IOException{
+    HashMap<String, String> prepMap() throws IOException{
         BufferedReader preps = new BufferedReader(new FileReader("textDocuments/prep.txt"));
         HashMap<String, String> prepMap = new HashMap<>();
 
@@ -74,7 +74,7 @@ public class Maps{
         return prepMap;
     }
 
-    public HashMap<String, String> conjMap() throws IOException{
+    HashMap<String, String> conjMap() throws IOException{
         BufferedReader conjs = new BufferedReader(new FileReader("textDocuments/conj.txt"));
         HashMap<String, String> conjMap = new HashMap<>();
 
@@ -83,7 +83,7 @@ public class Maps{
         return conjMap;
     }
 
-    public HashMap<String, String> interMap() throws IOException{
+    HashMap<String, String> interMap() throws IOException{
         BufferedReader inters = new BufferedReader(new FileReader("textDocuments/inter.txt"));
         HashMap<String, String> interMap = new HashMap<>();
 
@@ -92,7 +92,7 @@ public class Maps{
         return interMap;
     }
 
-    public void createMap(BufferedReader reader, HashMap<String, String> map) throws IOException{
+    private void createMap(BufferedReader reader, HashMap<String, String> map) throws IOException{
 
         String line;
 

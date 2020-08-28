@@ -10,26 +10,24 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.net.SocketException;
 import java.net.SocketTimeoutException;
-import java.util.Arrays;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Properties;
-import java.util.Set;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.select.Elements;
+
+// THIS CODE IS ONLY RAN ONCE TO GATHER THE SPANISH TRANSLATIONS OF ENGLISH WORDS
 
 /*
 This is the class dedicated to populating the different parts-of-speech-specified text
 documents with the correct translations by scraping a Spanish-to-English translation site.
 This part of the program is only meant to be used once, as the documents only need to be
-populated once (which is why less effort was put into refactoring into cleaner code).
+populated once.
 The code to populate the documents is commented out in the beginning of the "translate" method.
 If for some reason posAssign() was ran after the documents have already been populated,
 the program would simply start over and continue to populate them starting from the first
-word in the "english3.txt" file, appending the new entries to the end of the document.
-This shouldn't have any effect on the program other than the HashMaps (that hold the
-word/translation pairings) being larger.
+word in the "english3.txt" file, appending the new entries to the end of each document
+that pertains to a part of speech.
  */
 
 public class populate {
@@ -42,21 +40,31 @@ public class populate {
 
 
         String word, url, noun, verb, adj, adv, pronoun, article, prep, conj, inter;
-        Elements nounHolder, verbHolder, adjHolder, advHolder, pronounHolder, articleHolder, prepHolder, conjHolder, interHolder;
+        Elements nounHolder, verbHolder, adjHolder, advHolder, pronounHolder,
+                articleHolder, prepHolder, conjHolder, interHolder;
         int nounLocation;
 
         Document document = null;
 
         BufferedReader reader   = new BufferedReader(new FileReader("english3.txt"));
-        PrintWriter nounOut     = new PrintWriter(new FileOutputStream("noun.txt", true),  true);
-        PrintWriter verbOut     = new PrintWriter(new FileOutputStream("verb.txt", true),  true);
-        PrintWriter adjOut      = new PrintWriter(new FileOutputStream("adj.txt", true),  true);
-        PrintWriter advOut      = new PrintWriter(new FileOutputStream("adv.txt", true),  true);
-        PrintWriter pronounOut  = new PrintWriter(new FileOutputStream("pronoun.txt", true),  true);
-        PrintWriter articleOut  = new PrintWriter(new FileOutputStream("article.txt", true),  true);
-        PrintWriter prepOut     = new PrintWriter(new FileOutputStream("prep.txt", true),  true);
-        PrintWriter conjOut     = new PrintWriter(new FileOutputStream("conj.txt", true),  true);
-        PrintWriter interOut    = new PrintWriter(new FileOutputStream("inter.txt", true),  true);
+        PrintWriter nounOut     = new PrintWriter(new FileOutputStream(
+                "noun.txt", true), true);
+        PrintWriter verbOut     = new PrintWriter(new FileOutputStream(
+                "verb.txt", true),  true);
+        PrintWriter adjOut      = new PrintWriter(new FileOutputStream(
+                "adj.txt", true),  true);
+        PrintWriter advOut      = new PrintWriter(new FileOutputStream(
+                "adv.txt", true),  true);
+        PrintWriter pronounOut  = new PrintWriter(new FileOutputStream(
+                "pronoun.txt", true),  true);
+        PrintWriter articleOut  = new PrintWriter(new FileOutputStream(
+                "article.txt", true),  true);
+        PrintWriter prepOut     = new PrintWriter(new FileOutputStream(
+                "prep.txt", true),  true);
+        PrintWriter conjOut     = new PrintWriter(new FileOutputStream(
+                "conj.txt", true),  true);
+        PrintWriter interOut    = new PrintWriter(new FileOutputStream(
+                "inter.txt", true),  true);
 
         // While there is something to be read in the BufferedReader, assign 'word' to what is on that line
         while ((word = reader.readLine()) != null){
@@ -68,7 +76,8 @@ public class populate {
 
                 // Setup for the Jsoup parser
                 document = Jsoup.connect(url)
-                        .userAgent("Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/535.21 (KHTML, like Gecko) Chrome/19.0.1042.0 Safari/535.21")
+                        .userAgent("Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/535.21 " +
+                                "(KHTML, like Gecko) Chrome/19.0.1042.0 Safari/535.21")
                         .timeout(60000)
                         .ignoreHttpErrors(true)
                         .get();
@@ -161,38 +170,31 @@ public class populate {
                 Parse.Noun(parsedWord, pos, word, nounOut);
 
             }
-            else if("transitive verb".equalsIgnoreCase(firstHeading) || ("intransitive verb").equalsIgnoreCase(firstHeading)){
+            else if("transitive verb".equalsIgnoreCase(firstHeading)
+                    || ("intransitive verb").equalsIgnoreCase(firstHeading))
                 verbOut.println(word + " " + parsedWord);
-                System.out.println(word + " : " + parsedWord);
-            }
-            else if("adjective".equalsIgnoreCase(firstHeading)){
+
+            else if("adjective".equalsIgnoreCase(firstHeading))
                 adjOut.println(word + " " + parsedWord);
-                System.out.println(word + " : " + parsedWord);
-            }
-            else if("adverb".equalsIgnoreCase(firstHeading)){
+
+            else if("adverb".equalsIgnoreCase(firstHeading))
                 advOut.println(word + " " + parsedWord);
-                System.out.println(word + " : " + parsedWord);
-            }
-            else if("pronoun".equalsIgnoreCase(firstHeading)){
+
+            else if("pronoun".equalsIgnoreCase(firstHeading))
                 pronounOut.println(word + " " + parsedWord);
-                System.out.println(word + " : " + parsedWord);
-            }
-            else if("definite article".equalsIgnoreCase(firstHeading)){
+
+            else if("definite article".equalsIgnoreCase(firstHeading))
                 articleOut.println(word + " " + parsedWord);
-                System.out.println(word + " : " + parsedWord);
-            }
-            else if("preposition".equalsIgnoreCase(firstHeading)){
+
+            else if("preposition".equalsIgnoreCase(firstHeading))
                 prepOut.println(word + " " + parsedWord);
-                System.out.println(word + " : " + parsedWord);
-            }
-            else if("conjunction".equalsIgnoreCase(firstHeading)){
+
+            else if("conjunction".equalsIgnoreCase(firstHeading))
                 conjOut.println(word + " " + parsedWord);
-                System.out.println(word + " : " + parsedWord);
-            }
-            else if("interjection".equalsIgnoreCase(firstHeading)){
+
+            else if("interjection".equalsIgnoreCase(firstHeading))
                 interOut.println(word + " " + parsedWord);
-                System.out.println(word + " : " + parsedWord);
-            }
+
 
                 /* If there are multiple parts of speech for the word,
                    the selectors that are to be parsed for the various parts
@@ -218,7 +220,8 @@ public class populate {
                     String hH = "#dictionary-neodict-en > div > div._2xs-UBSR:nth-of-type(" + i + ")";
                     String hHtext = "._2RDqaj2O";
 
-                    String posHolder = "div._2xs-UBSR:nth-of-type(" + i + ") > .FyTYrC-y > div:nth-of-type(1) > .FyTYrC-y > div:nth-of-type(1)";
+                    String posHolder = "div._2xs-UBSR:nth-of-type(" + i + ") " +
+                            "> .FyTYrC-y > div:nth-of-type(1) > .FyTYrC-y > div:nth-of-type(1)";
                     String posText = ".C2TP2MvR";
 
                     Elements headingHolder = document.select(hH);
@@ -248,87 +251,66 @@ public class populate {
 
                         if(word.length() <= 1 || noun.length() <= 0)
                             noun = "";
+
                         else if(noun.length() >= 6 && "el/la".equals(noun.substring(0, 5)))
-                            noun = noun.substring(6, noun.length());
+                            noun = noun.substring(6);
+
                         else if("el".equals(noun.substring(0, 2)) || "la".equals(noun.substring(0, 2)))
-                            noun = noun.substring(3, noun.length());
-                        if("NN".equals(pos) || "IN".equals(pos)){
+                            noun = noun.substring(3);
+
+                        if("NN".equals(pos) || "IN".equals(pos))
                             nounOut.println(word + " " + noun);
-                            System.out.println(word + " : " + noun);
-                        }
+
                         else if("NNS".equals(pos)){
                             noun = Create.Plural(noun);
                             nounOut.println(word + " " + noun);
-                            System.out.println(word + " : " + noun);
                         }
                     }
                     if("transitive verb".equalsIgnoreCase(heading) || "intransitive verb".equalsIgnoreCase(heading)){
                         verbHolder = document.select(posHolder);
                         verb = verbHolder.select(posText).text();
-
                         verbOut.println(word + " " + verb);
-                        System.out.println(word + " : " + verb);
                     }
                     if("adjective".equalsIgnoreCase(heading)){
                         adjHolder = document.select(posHolder);
                         adj = adjHolder.select(posText).text();
-
                         adjOut.println(word + " " + adj);
-                        System.out.println(word + " : " + adj);
                     }
                     if("adverb".equalsIgnoreCase(heading)){
                         advHolder = document.select(posHolder);
                         adv = advHolder.select(posText).text();
-
                         advOut.println(word + " " + adv);
-                        System.out.println(word + " : " + adv);
                     }
                     if("pronoun".equalsIgnoreCase(heading)){
                         pronounHolder = document.select(posHolder);
                         pronoun = pronounHolder.select(posText).text();
-
                         pronounOut.println(word + " " + pronoun);
-                        System.out.println(word + " : " + pronoun);
                     }
                     if("article".equalsIgnoreCase(heading)){
                         articleHolder = document.select(posHolder);
                         article = articleHolder.select(posText).text();
-
                         articleOut.println(word + " " + article);
-                        System.out.println(word + " : " + article);
                     }
                     if("preposition".equalsIgnoreCase(heading)){
                         prepHolder = document.select(posHolder);
                         prep = prepHolder.select(posText).text();
-
                         prepOut.println(word + " " + prep);
-                        System.out.println(word + " : " + prep);
                     }
                     if("conjunction".equalsIgnoreCase(heading)){
                         conjHolder = document.select(posHolder);
                         conj = conjHolder.select(posText).text();
-
                         conjOut.println(word + " " + conj);
-                        System.out.println(word + " : " + conj);
                     }
                     if("interjection".equalsIgnoreCase(heading)){
                         interHolder = document.select(posHolder);
                         inter = interHolder.select(posText).text();
-
                         interOut.println(word + " " + inter);
-                        System.out.println(word + " : " + inter);
                     }
                     i++;
                 }
             }
-                /* System.out.printf("Word: %-20s, Noun: %B(%-20s) @ %d, Verb: %B(%-20s) @ %d, Adj: %B(%-20s) @ %d, Adv: %B(%-20s) @ %d\n",
-                 word, hasNoun, noun, nounLocation, hasVerb, verb, verbLocation, hasAdj, adj, adjLocation, hasAdv, adv, advLocation);
-                 System.out.println(word + "    |    " + noun + "  |  " + verb + "  |  " + adj + "  |  " + adv + "  |  "
-                 + pronoun + "  |  "  + article  + "  |  " + prep  + "  |  " + conj  + "  |  " + inter);
-                */
         }
-        nounOut.close(); verbOut.close(); adjOut.close(); advOut.close(); pronounOut.close();
-        articleOut.close(); prepOut.close(); conjOut.close(); interOut.close();
-
+        nounOut.close(); verbOut.close(); adjOut.close(); advOut.close();
+        pronounOut.close(); articleOut.close(); prepOut.close(); conjOut.close(); interOut.close();
     }
 }

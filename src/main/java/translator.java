@@ -43,20 +43,18 @@ public class translator {
         String[] split = userInput.toLowerCase().split("\\s+");
 
         // Stores the last word and punctuation of the user input
-        String lastWord = "";
-        String punctuation = split[split.length-1].substring(split[split.length-1].length()-1, split[split.length-1].length());
+        String punctuation = split[split.length-1].substring(split[split.length-1].length()-1);
 
-        // If there is puncutation at the end of the sentence, the last
-        // value of the array is the same word at that position with no puncuation
-        // If not, puncuation is empty
+        // If there is punctuation at the end of the sentence, the last
+        // value of the array is the same word at that position with no punctuation
+        // If not, punctuation is empty
         if((".").equals(punctuation) || ("?").equals(punctuation) || ("!").equals(punctuation)){
-            lastWord = split[split.length-1].substring(0, split[split.length-1].length()-1);
+            String lastWord = split[split.length-1].substring(0, split[split.length-1].length()-1);
             split[split.length-1] = lastWord.trim();
         }
-        else{
-            lastWord = split[split.length-1];
+        else
             punctuation = "";
-        }
+
 
         boolean hasAdj = false;
         boolean hasAdv = false;
@@ -67,6 +65,13 @@ public class translator {
             boolean hasComma = false;
 
             String pos = "";
+
+            // If the current word has a comma, take out the comma and set
+            // set hasComma to true so we can add it back after the word is translated
+            if(split[i].substring(split[i].length()-1).equals(",")) {
+                split[i] = split[i].substring(0, split[i].length() - 1);
+                hasComma = true;
+            }
 
             // create an empty Annotation just with the given text
             Annotation annotation = new Annotation(split[i]);
@@ -90,10 +95,6 @@ public class translator {
 
             //-----------------------------------------------------------------
 
-            // If the current word has a comma, take out the comma and set
-            // set hasComma to true so we can add it back after the word is translated
-            handleComma(split, i, hasComma);
-
             // if the word can be an adjective and the word after the adjective is a noun
             if(is.adjUsable(maps.adjMap(), split, i, pos) && (split.length > i+1 && maps.nounMap().containsKey(split[i+1]))){
                 hasAdj = true; continue; }
@@ -105,28 +106,21 @@ public class translator {
             translation += build.construct(maps, split, i, pos, translation);
 
 
-            if(is.nounUsable(maps.nounMap(), split, i, pos) && hasAdj == true){
+            if(is.nounUsable(maps.nounMap(), split, i, pos) && hasAdj){
                 translation += maps.adjMap().get(split[i-1]).toLowerCase() + " ";  hasAdj = false; }
 
-            if(is.nounUsable(maps.nounMap(), split, i, pos) && hasAdv == true){
+            if(is.nounUsable(maps.nounMap(), split, i, pos) && hasAdv){
                 translation += maps.advMap().get(split[i-1]).toLowerCase() + " ";  hasAdv = false; }
 
-            if(hasComma == true)
+            if(hasComma)
                 translation = translation.substring(0, translation.length()-1) + ", ";
         }
 
         //-----------------------------------------------------------------
 
         // capitalize the first letter of the sentence post-translation
-        translation = translation.substring(0,1).toUpperCase() + translation.substring(1, translation.length()).trim() + punctuation;
+        translation = translation.substring(0,1).toUpperCase() + translation.substring(1).trim() + punctuation;
 
         return translation;
-    }
-
-    public void handleComma(String[] split, int i, boolean hasComma){
-        if(split[i].substring(split[i].length()-1, split[i].length()).equals(",")){
-            split[i] = split[i].substring(0, split[i].length()-1);
-            hasComma = true;
-        }
     }
 }

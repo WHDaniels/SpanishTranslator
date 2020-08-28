@@ -39,7 +39,7 @@ public class Construct {
         else if(is.prepUsable(maps.prepMap(), split, i, pos))
             return maps.prepMap().get(split[i]).toLowerCase() + " ";
 
-            // If word to be translated is a conjuction
+            // If word to be translated is a conjunction
         else if(is.conjUsable(maps.conjMap(), split, i, pos))
             return maps.conjMap().get(split[i]).toLowerCase() + " ";
 
@@ -51,7 +51,7 @@ public class Construct {
 
     }
 
-    public String translatedNoun(String[] split, int i, HashMap<String, String> map){
+    private String translatedNoun(String[] split, int i, HashMap<String, String> map){
         if(split[i].length() < 2)
             return map.get(split[i]).toUpperCase() + " ";
         return map.get(split[i]) + " ";

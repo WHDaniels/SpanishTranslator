@@ -5,10 +5,6 @@ import javafx.animation.FadeTransition;
 import javafx.application.Application;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -26,16 +22,13 @@ import javafx.util.Duration;
  */
 public class Main extends Application{
 
-    Stage window;
-    String translatedText;
-    translator perform = new translator();
+    private String translatedText;
+    private translator perform = new translator();
 
     @Override
     public void start(Stage primaryStage) throws IOException {
 
-        window = primaryStage;
-
-        window.setTitle("SpanishTranslate");
+        primaryStage.setTitle("SpanishTranslate");
 
         final GridPane grid = new GridPane();
         grid.setPadding(new Insets(50, 50, 50, 50));
@@ -99,9 +92,9 @@ public class Main extends Application{
 
         Scene scene = new Scene(grid, 1775, 450);
         //scene.getStylesheets().addAll(this.getClass().getResource("style.css").toExternalForm());
-        window.setScene(scene);
-        window.setResizable(false);
-        window.show();
+        primaryStage.setScene(scene);
+        primaryStage.setResizable(false);
+        primaryStage.show();
 
         fade.play();
 

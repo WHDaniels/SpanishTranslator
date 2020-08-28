@@ -2,9 +2,9 @@ import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 
-public class Create {
+class Create {
 
-    public static String Noun(String noun) {
+    static String Noun(String noun) {
         if(noun.length() >= 6 && "el/la".equals(noun.substring(0, 5)))
             return noun.substring(6, noun.length());
         else if("el".equals(noun.substring(0, 2)) || "la".equals(noun.substring(0, 2)))
@@ -12,7 +12,7 @@ public class Create {
         return noun;
     }
 
-    public static String Plural(String noun) {
+    static String Plural(String noun) {
 
         final Set<String> Rule1 = new HashSet<>(Arrays.asList("a", "e", "i", "o", "u", "á", "é", "ó", "í", "ú"));
         final Set<String> Rule2 = new HashSet<>(Arrays.asList("ay", "ey", "iy", "oy", "uy", "ch"));
